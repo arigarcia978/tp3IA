@@ -1,0 +1,15 @@
+<div>
+	<ion-view view-title="Beacons Visibles">
+		<ion-content>
+			<div class="list">
+			  	<a class="item" ng-click = 'beaconSeleccionado(value)' ng-repeat="(key, value) in beacons">
+				    <p> <strong>UUID: {{value.uuid}}</strong></p>
+				    major: {{value.major}}<br> 
+					minor: {{value.minor}}<br>
+					Distancia : {{value.accuracy}}m <br>
+					Rssi: {{value.rssi}}
+			  	</a>
+			</div>
+	  	</ion-content>
+	</ion-view>
+</div>
