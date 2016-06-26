@@ -22,15 +22,19 @@ angular.module('starter')
 		        $cordovaBeacon.startRangingBeaconsInRegion($cordovaBeacon.createBeaconRegion("estimote", "b9407f30-f5f8-466e-aff9-25556b57fe6d"));
 			});
 
+			var beacon;
+
 			$scope.beaconSeleccionado = function(beaconSeleccionado){
-				beacon = beaconSeleccionado.beacon;
-				console.log('elegiste el beacon ');
-				console.log(beaconSeleccionado);
-				$scope.angulo = 0;
-				pedirAngulo();
-				//intervalo = setInterval(getAngulo, 500);
-				
-				//setTimeout(guardarBeacon(beacon), 5005);
+				var beaconCargado = controladorGestionarMapa.comprobarSiBeaconYaSeCargo(beaconSeleccionado);
+				if(!beaconCargado){
+					beacon = beaconSeleccionado;
+					$scope.angulo = 0;
+					pedirAngulo();
+				} else {
+					$scope.showAlert('Beacon guardado previamente', function(){
+						console.log('Beacon ya guardado');
+					});
+				}
 			}
 
     		var beaconsHardcodeado = {
@@ -47,8 +51,9 @@ angular.module('starter')
     			$scope.showAlert(mensaje, medirAngulo);
     		}
 
-			function guardarBeacon(beacon){
+			function guardarBeacon(){
 				clearInterval(intervalo);
+				controladorGestionarMapa.inicializarMapa(beacon, $scope.angulo);
 				$scope.showAlert('Se guardo el beacon', function(){
 					console.log('se ha guardado el beacon');
 				});
@@ -56,7 +61,7 @@ angular.module('starter')
 
 			function medirAngulo(){
 				intervalo = setInterval(getAngulo, 500);
-			    setTimeout(guardarBeacon(beacon), 10000);
+			    setTimeout(guardarBeacon, 5000);
 			}
 
 			 $scope.showAlert = function(mensaje, callback) {
@@ -66,18 +71,14 @@ angular.module('starter')
 			   });
 
 			   alertPopup.then(function(res) {
-			   		console.log('el then del popup');
 			   		callback();
-			   		//setTimeout(callback, 10000);
 			   });
 			 };
 
 	    	function getAngulo(){
-	      		console.log('estoy aqui en get angulo');
 	      		navigator.compass.getCurrentHeading(
 	        		function(data) {
-	        			console.log(data);
-	          			$scope.angulo = data.magneticHeading;
+	        			$scope.angulo = data.magneticHeading;
 	        		},
 	        		function(error){
 	          			console.log(error);

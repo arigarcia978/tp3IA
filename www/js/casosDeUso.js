@@ -4,10 +4,14 @@ function ControladorGestionarMapa() {
 }
 
 ControladorGestionarMapa.prototype.inicializarMapa = function(datosBeacons, angulo){
+	console.log(datosBeacons);
+	console.log(angulo);
 	var beacon = new Beacon(datosBeacons.uuid, datosBeacons.major, datosBeacons.minor);
 	var distanciaABeacon = datosBeacons.accuracy;
 	var posicion;
-	if(this.mapa.hayBeaconsCargados()){
+	if(!this.mapa.hayBeaconsCargados()){
+		console.log(distanciaABeacon);
+		console.log('primer beacon');
 		this.mapa.desfasaje = angulo;
 		posicion = new Posicion(distanciaABeacon, 0);
 	} else {
@@ -18,6 +22,8 @@ ControladorGestionarMapa.prototype.inicializarMapa = function(datosBeacons, angu
 	}
 	beacon.setPosicion(posicion);
 	this.mapa.addBeacon(beacon);
+	console.log(beacon);
+	console.log(this.mapa);
 }
 
 ControladorGestionarMapa.prototype.guardarPuntoIntermedio = function(beaconsVisibles){
@@ -55,3 +61,9 @@ ControladorGestionarMapa.prototype.getPosicionActual = function (beaconsVisibles
 	var posicionActual = new Posicion(p4.x, p4.y);
 	return posicionActual;
 }
+ControladorGestionarMapa.prototype.comprobarSiBeaconYaSeCargo = function(datosBeacon){
+	var beacon = new Beacon(datosBeacon.uuid, datosBeacon.major, datosBeacon.minor);
+	return this.mapa.beaconCargado(beacon);
+}
+
+var controladorGestionarMapa = new ControladorGestionarMapa();
