@@ -1,13 +1,15 @@
 <div>
 	<ion-view view-title="Beacons Visibles">
 		<ion-content>
+			<p>Ángulo: {{angulo}}</p>
 			<div class="list">
-			  	<a class="item" ng-click = 'beaconSeleccionado(value)' ng-repeat="(key, value) in beacons">
-				    <p> <strong>UUID: {{value.uuid}}</strong></p>
-				    major: {{value.major}}<br> 
-					minor: {{value.minor}}<br>
-					Distancia : {{value.accuracy}}m <br>
-					Rssi: {{value.rssi}}
+			  	<a class="item" ng-click = 'beaconSeleccionado(item.beacon)' ng-repeat="item in beacons">
+				    <p> <strong>{{item.nombre}}</strong></p>
+				    UUID: {{item.beacon.uuid}} </br>
+				    major: {{item.beacon.major}}<br> 
+					minor: {{item.beacon.minor}}<br>
+					Distancia : {{item.beacon.accuracy}}m <br>
+					Rssi: {{item.beacon.rssi}}
 			  	</a>
 			</div>
 	  	</ion-content>
