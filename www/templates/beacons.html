@@ -1,7 +1,7 @@
 <div>
 	<ion-view view-title="Beacons Visibles">
 		<ion-content>
-			<p>Ángulo: {{angulo}}</p>
+			<p>Ángulo: {{angulo	}}</p>
 			<div class="list">
 			  	<a class="item" ng-click = 'beaconSeleccionado(item.beacon)' ng-repeat="item in beacons">
 				    <p> <strong>{{item.nombre}}</strong></p>
@@ -12,6 +12,9 @@
 					Rssi: {{item.beacon.rssi}}
 			  	</a>
 			</div>
+			<a class="button button-block button-royal" ng-click = 'getPosicion()'>
+				Ver posición
+			</a>
 	  	</ion-content>
 	</ion-view>
 </div>

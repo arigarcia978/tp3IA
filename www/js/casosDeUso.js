@@ -36,17 +36,26 @@ ControladorGestionarMapa.prototype.guardarPuntoDestino = function(beaconsVisible
 }
 
 ControladorGestionarMapa.prototype.getPosicionActual = function (beaconsVisibles){
+	console.log(beaconsVisibles);
+
+	for(b in beaconsVisibles){
+		console.log(b);
+	}
+	var array = Array.prototype.slice.call(beaconsVisibles);
+	console.log(array);
+
 	beaconsVisibles.sort(
 		function(a, b){
 			//return b.accuracy - a.accuracy
-			if(a.accuracy > b.accuracy){
+			if(a.beacon.accuracy > b.beacon.accuracy){
 				return -1;
 			}
-			if(a.accuracy < b.accuracy){
+			if(a.beacon.accuracy < b.beacon.accuracy){
 				return 1;
 			}
 			return 0;
-		});
+		}
+	);
 
 	var puntos;
 	for(i = 0; i < 3; i++){

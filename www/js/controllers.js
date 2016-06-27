@@ -38,11 +38,11 @@ angular.module('starter')
 			}
 
     		var beaconsHardcodeado = {
-    			'b9407f30-f5f8-466e-aff9-25556b57fe6d:53423:34137': 'Beacon1',
+    			'b9407f30-f5f8-466e-aff9-25556b57fe6d:53423:34137': 'Ari linda',
     			'b9407f30-f5f8-466e-aff9-25556b57fe6d:35580:32597': 'Beacon2',
-    			'b9407f30-f5f8-466e-aff9-25556b57fe6d:43805:16417': 'Beacon3',
+    			'b9407f30-f5f8-466e-aff9-25556b57fe6d:43805:16417': 'lean',
     			'b9407f30-f5f8-466e-aff9-25556b57fe6d:64629:15988': 'Beacon4',
-    			'b9407f30-f5f8-466e-aff9-25556b57fe6d:22210:7642': 'Beacon5',
+    			'b9407f30-f5f8-466e-aff9-25556b57fe6d:22210:7642': 'matias gay',
     			'b9407f30-f5f8-466e-aff9-25556b57fe6d:46778:1037': 'Beacon6'
     		}
 
@@ -64,7 +64,7 @@ angular.module('starter')
 			    setTimeout(guardarBeacon, 5000);
 			}
 
-			 $scope.showAlert = function(mensaje, callback) {
+			$scope.showAlert = function(mensaje, callback) {
 			   var alertPopup = $ionicPopup.alert({
 			     title: 'Aviso',
 			     template: mensaje
@@ -73,7 +73,7 @@ angular.module('starter')
 			   alertPopup.then(function(res) {
 			   		callback();
 			   });
-			 };
+			};
 
 	    	function getAngulo(){
 	      		navigator.compass.getCurrentHeading(
@@ -83,5 +83,10 @@ angular.module('starter')
 	        		function(error){
 	          			console.log(error);
 	        		});
+	    	}
+
+	    	$scope.getPosicion = function(){
+				var posicion = controladorGestionarMapa.getPosicionActual($scope.beacons);
+				console.log(posicion);
 	    	}
 		}])
