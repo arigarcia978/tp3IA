@@ -1,10 +1,45 @@
+var beaconsHardcodeado = {
+	'b9407f30-f5f8-466e-aff9-25556b57fe6d:53423:34137': 'Ari linda',
+	'b9407f30-f5f8-466e-aff9-25556b57fe6d:35580:32597': 'Beacon2',
+	'b9407f30-f5f8-466e-aff9-25556b57fe6d:43805:16417': 'lean',
+	'b9407f30-f5f8-466e-aff9-25556b57fe6d:64629:15988': 'Beacon4',
+	'b9407f30-f5f8-466e-aff9-25556b57fe6d:22210:7642': 'matias gay',
+	'b9407f30-f5f8-466e-aff9-25556b57fe6d:46778:1037': 'Beacon6'
+}
+var beacons = {};
+beacons["b9407f30-f5f8-466e-aff9-25556b57fe6d:53423:34137"] = {
+	nombre: beaconsHardcodeado["b9407f30-f5f8-466e-aff9-25556b57fe6d:53423:34137"],
+	beacon: {
+		accuracy: 0.92,
+		major: "53423",
+		minor: "34137",
+		proximity: "ProximityNear",
+		rssi: -61,
+		tx: -60,
+		uuid: "b9407f30-f5f8-466e-aff9-25556b57fe6d"
+	}
+}
+beacons["b9407f30-f5f8-466e-aff9-25556b57fe6d:22210:7642"] = {
+	nombre: beaconsHardcodeado["b9407f30-f5f8-466e-aff9-25556b57fe6d:22210:7642"],
+	beacon: {
+		accuracy: 3.12,
+		major: "22210",
+		minor: "7642",
+		proximity: "ProximityNear",
+		rssi: -88,
+		tx: -60,
+		uuid: "b9407f30-f5f8-466e-aff9-25556b57fe6d"
+	}
+}
+
 angular.module('starter')
 	.controller('MainController', ['$scope', function($scope){
 	}])
-
-	.controller('BeaconsController', ['$scope', '$rootScope', '$ionicPlatform', '$cordovaBeacon', '$ionicPopup', '$timeout',
-		function($scope, $rootScope, $ionicPlatform, $cordovaBeacon, $ionicPopup, $timeout){
+	//agregar $cordovaBeacon para usarlo
+	.controller('BeaconsController', ['$scope', '$rootScope', '$ionicPlatform', '$ionicPopup', '$timeout',
+		function($scope, $rootScope, $ionicPlatform, $ionicPopup, $timeout){
 			$scope.beacons = {};
+			/*
 		    $ionicPlatform.ready(function() {
 		        $cordovaBeacon.requestWhenInUseAuthorization();
 		        $rootScope.$on("$cordovaBeacon:didRangeBeaconsInRegion", function(event, resultado) {
@@ -21,7 +56,8 @@ angular.module('starter')
 		        });
 		        $cordovaBeacon.startRangingBeaconsInRegion($cordovaBeacon.createBeaconRegion("estimote", "b9407f30-f5f8-466e-aff9-25556b57fe6d"));
 			});
-
+			*/
+			$scope.beacons = beacons;
 			var beacon;
 
 			$scope.beaconSeleccionado = function(beaconSeleccionado){
@@ -36,15 +72,6 @@ angular.module('starter')
 					});
 				}
 			}
-
-    		var beaconsHardcodeado = {
-    			'b9407f30-f5f8-466e-aff9-25556b57fe6d:53423:34137': 'Ari linda',
-    			'b9407f30-f5f8-466e-aff9-25556b57fe6d:35580:32597': 'Beacon2',
-    			'b9407f30-f5f8-466e-aff9-25556b57fe6d:43805:16417': 'lean',
-    			'b9407f30-f5f8-466e-aff9-25556b57fe6d:64629:15988': 'Beacon4',
-    			'b9407f30-f5f8-466e-aff9-25556b57fe6d:22210:7642': 'matias gay',
-    			'b9407f30-f5f8-466e-aff9-25556b57fe6d:46778:1037': 'Beacon6'
-    		}
 
     		function pedirAngulo(){
     			var mensaje = 'Necesitamos que no te muevas durante 5 segundos y apuntes al beacon que estas guardando.';

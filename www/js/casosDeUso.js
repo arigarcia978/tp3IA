@@ -36,21 +36,19 @@ ControladorGestionarMapa.prototype.guardarPuntoDestino = function(beaconsVisible
 }
 
 ControladorGestionarMapa.prototype.getPosicionActual = function (beaconsVisibles){
-	console.log(beaconsVisibles);
+	arrayBeacons = [];
 
 	for(b in beaconsVisibles){
-		console.log(b);
+		arrayBeacons.push(beaconsVisibles[b]);
 	}
-	var array = Array.prototype.slice.call(beaconsVisibles);
-	console.log(array);
 
-	beaconsVisibles.sort(
+	arrayBeacons.sort(
 		function(a, b){
 			//return b.accuracy - a.accuracy
-			if(a.beacon.accuracy > b.beacon.accuracy){
+			if(a.beacon.accuracy < b.beacon.accuracy){
 				return -1;
 			}
-			if(a.beacon.accuracy < b.beacon.accuracy){
+			if(a.beacon.accuracy > b.beacon.accuracy){
 				return 1;
 			}
 			return 0;
@@ -59,10 +57,14 @@ ControladorGestionarMapa.prototype.getPosicionActual = function (beaconsVisibles
 
 	var puntos;
 	for(i = 0; i < 3; i++){
-		var valorUnico;
+		var beacon = arrayBeacons[i].beacon;
+		console.log(beacon);
+		var valorUnico = beacon.uuid + beacon.major + beacon.minor;
+		console.log(valorUnico);
 		var posicionBeacon = this.mapa.getPosicionDeBeacon(valorUnico);
-		var punto = { x: posicionBeacon.x, y: posicionBeacon.y, z: 0, r: beaconsVisibles[0].accuracy };
-		puntos.push(punto);
+		console.log(posicionBeacon);
+		//var punto = { x: posicionBeacon.x, y: posicionBeacon.y, z: 0, r: beaconsVisibles[0].accuracy };
+		//puntos.push(punto);
 	}
 	
 	var p4 = trilaterate(puntos[0], puntos[1], puntos[2]);
