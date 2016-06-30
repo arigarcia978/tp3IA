@@ -51,10 +51,27 @@ ControladorGestionarMapa.prototype.guardarPuntoDestino = function(beaconsVisible
 }
 
 ControladorGestionarMapa.prototype.getPosicionActual = function (beaconsVisibles){
-	arrayBeacons = [];
+	var arrayBeacons = this.getBeaconsGuardadosMasCercanos(beaconsVisibles);
+
+	var puntos = [];
+	for(i = 0; i < 3; i++){
+		var beacon = arrayBeacons[i].beacon;
+		var valorUnico = beacon.uuid + beacon.major + beacon.minor;
+		var posicionBeacon = this.mapa.getPosicionDeBeacon(valorUnico);
+		var punto = { x: posicionBeacon.x, y: posicionBeacon.y, z: 0, r: arrayBeacons[i].beacon.accuracy+2 };
+		puntos.push(punto);
+	}
+	return this.getPuntoDePosicionActual(puntos);
+
+}
+ControladorGestionarMapa.prototype.getBeaconsGuardadosMasCercanos = function(beaconsVisibles){
+	var arrayBeacons = [];
 
 	for(b in beaconsVisibles){
-		arrayBeacons.push(beaconsVisibles[b]);
+		var beacon = beaconsVisibles[b];
+		if(this.comprobarSiBeaconYaSeCargo(beacon)){
+			arrayBeacons.push(beacon);
+		}
 	}
 
 	arrayBeacons.sort(
@@ -69,20 +86,16 @@ ControladorGestionarMapa.prototype.getPosicionActual = function (beaconsVisibles
 			return 0;
 		}
 	);
-
-	var puntos = [];
-	for(i = 0; i < 3; i++){
-		var beacon = arrayBeacons[i].beacon;
-		var valorUnico = beacon.uuid + beacon.major + beacon.minor;
-		var posicionBeacon = this.mapa.getPosicionDeBeacon(valorUnico);
-		var punto = { x: posicionBeacon.x, y: posicionBeacon.y, z: 0, r: arrayBeacons[i].beacon.accuracy+2 };
-		puntos.push(punto);
-	}
-	return this.getPuntoDePosicionActual(puntos);
-
+	console.log(arrayBeacons);
+	return arrayBeacons;
 }
 ControladorGestionarMapa.prototype.comprobarSiBeaconYaSeCargo = function(datosBeacon){
-	var beacon = new Beacon(datosBeacon.uuid, datosBeacon.major, datosBeacon.minor);
+	var beacon;
+	if(datosBeacon typeof Beacon){
+		beacon = datosBeacon;
+	} else {
+		beacon = new Beacon(datosBeacon.uuid, datosBeacon.major, datosBeacon.minor);
+	}
 	return this.mapa.beaconCargado(beacon);
 }
 ControladorGestionarMapa.prototype.getPuntoDePosicionActual = function(puntos){
