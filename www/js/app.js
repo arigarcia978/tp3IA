@@ -6,7 +6,7 @@
 
 
 //agregar ngCordovaBeacon
-angular.module('starter', ['ionic', 'ui.router'])
+angular.module('starter', ['ionic', 'ui.router', 'ngCordovaBeacon'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {

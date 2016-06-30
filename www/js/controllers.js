@@ -1,45 +1,59 @@
 var beaconsHardcodeado = {
 	'b9407f30-f5f8-466e-aff9-25556b57fe6d:53423:34137': 'Ari linda',
-	'b9407f30-f5f8-466e-aff9-25556b57fe6d:35580:32597': 'Beacon2',
+	'b9407f30-f5f8-466e-aff9-25556b57fe6d:35580:32597': 'frankits',
 	'b9407f30-f5f8-466e-aff9-25556b57fe6d:43805:16417': 'lean',
-	'b9407f30-f5f8-466e-aff9-25556b57fe6d:64629:15988': 'Beacon4',
+	'b9407f30-f5f8-466e-aff9-25556b57fe6d:64629:15988': 'ari2',
 	'b9407f30-f5f8-466e-aff9-25556b57fe6d:22210:7642': 'matias gay',
-	'b9407f30-f5f8-466e-aff9-25556b57fe6d:46778:1037': 'Beacon6'
+	'b9407f30-f5f8-466e-aff9-25556b57fe6d:46778:1037': 'muak',
+	"b9407f30-f5f8-466e-aff9-25556b57fe6d:22213:7609": 'trucho'
 }
 var beacons = {};
-beacons["b9407f30-f5f8-466e-aff9-25556b57fe6d:53423:34137"] = {
-	nombre: beaconsHardcodeado["b9407f30-f5f8-466e-aff9-25556b57fe6d:53423:34137"],
-	beacon: {
-		accuracy: 0.92,
-		major: "53423",
-		minor: "34137",
-		proximity: "ProximityNear",
-		rssi: -61,
-		tx: -60,
-		uuid: "b9407f30-f5f8-466e-aff9-25556b57fe6d"
+/*
+	beacons["b9407f30-f5f8-466e-aff9-25556b57fe6d:53423:34137"] = {
+		nombre: beaconsHardcodeado["b9407f30-f5f8-466e-aff9-25556b57fe6d:53423:34137"],
+		beacon: {
+			accuracy: 28,
+			major: "53423",
+			minor: "34137",
+			proximity: "ProximityNear",
+			rssi: -61,
+			tx: -60,
+			uuid: "b9407f30-f5f8-466e-aff9-25556b57fe6d"
+		}
 	}
-}
-beacons["b9407f30-f5f8-466e-aff9-25556b57fe6d:22210:7642"] = {
-	nombre: beaconsHardcodeado["b9407f30-f5f8-466e-aff9-25556b57fe6d:22210:7642"],
-	beacon: {
-		accuracy: 3.12,
-		major: "22210",
-		minor: "7642",
-		proximity: "ProximityNear",
-		rssi: -88,
-		tx: -60,
-		uuid: "b9407f30-f5f8-466e-aff9-25556b57fe6d"
+	beacons["b9407f30-f5f8-466e-aff9-25556b57fe6d:22210:7642"] = {
+		nombre: beaconsHardcodeado["b9407f30-f5f8-466e-aff9-25556b57fe6d:22210:7642"],
+		beacon: {
+			accuracy: 29.5,
+			major: "22210",
+			minor: "7642",
+			proximity: "ProximityNear",
+			rssi: -88,
+			tx: -60,
+			uuid: "b9407f30-f5f8-466e-aff9-25556b57fe6d"
+		}
 	}
-}
-
+	beacons["b9407f30-f5f8-466e-aff9-25556b57fe6d:22213:7609"] = {
+		nombre: beaconsHardcodeado["b9407f30-f5f8-466e-aff9-25556b57fe6d:22213:7609"],
+		beacon: {
+			accuracy: 29,
+			major: '22213',
+			minor: '7609',
+			proximity: "ProximityNear",
+			rssi: -90,
+			tx: -60,
+			uuid: "b9407f30-f5f8-466e-aff9-25556b57fe6d"
+		}
+	}
+*/
 angular.module('starter')
 	.controller('MainController', ['$scope', function($scope){
 	}])
 	//agregar $cordovaBeacon para usarlo
-	.controller('BeaconsController', ['$scope', '$rootScope', '$ionicPlatform', '$ionicPopup', '$timeout',
-		function($scope, $rootScope, $ionicPlatform, $ionicPopup, $timeout){
+	.controller('BeaconsController', ['$scope', '$rootScope', '$ionicPlatform', '$ionicPopup', '$timeout', '$cordovaBeacon',
+		function($scope, $rootScope, $ionicPlatform, $ionicPopup, $timeout, $cordovaBeacon){
 			$scope.beacons = {};
-			/*
+			
 		    $ionicPlatform.ready(function() {
 		        $cordovaBeacon.requestWhenInUseAuthorization();
 		        $rootScope.$on("$cordovaBeacon:didRangeBeaconsInRegion", function(event, resultado) {
@@ -56,8 +70,8 @@ angular.module('starter')
 		        });
 		        $cordovaBeacon.startRangingBeaconsInRegion($cordovaBeacon.createBeaconRegion("estimote", "b9407f30-f5f8-466e-aff9-25556b57fe6d"));
 			});
-			*/
-			$scope.beacons = beacons;
+			
+			//$scope.beacons = beacons;
 			var beacon;
 
 			$scope.beaconSeleccionado = function(beaconSeleccionado){
@@ -84,6 +98,7 @@ angular.module('starter')
 				$scope.showAlert('Se guardo el beacon', function(){
 					console.log('se ha guardado el beacon');
 				});
+				$scope.getPosicion();
 			}
 
 			function medirAngulo(){
@@ -113,7 +128,14 @@ angular.module('starter')
 	    	}
 
 	    	$scope.getPosicion = function(){
-				var posicion = controladorGestionarMapa.getPosicionActual($scope.beacons);
-				console.log(posicion);
+	    		if(controladorGestionarMapa.mapaInicializado()){
+					console.log('mapaInicializado');
+					setInterval($scope.getPosicionActual, 500);
+				} else {
+					console.log('mapa no inicializado todavía');
+				}
+	    	}
+	    	$scope.getPosicionActual = function(){
+				$scope.posicion = controladorGestionarMapa.getPosicionActual($scope.beacons);
 	    	}
 		}])

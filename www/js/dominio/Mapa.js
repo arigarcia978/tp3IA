@@ -2,10 +2,19 @@ function Mapa(){
 	this.desfasaje;
 	//this.beacons = [];
 	this.beacons = [];
-	this.beacons.push(new Beacon("b9407f30-f5f8-466e-aff9-25556b57fe6d", "53423", "34137"));
-	this.beacons.push(new Beacon("b9407f30-f5f8-466e-aff9-25556b57fe6d", "22210", "7642"));
+	/*
+	var b = new Beacon("b9407f30-f5f8-466e-aff9-25556b57fe6d", "53423", "34137");
+	b.setPosicion(new Posicion(30, 0));
+	this.beacons.push(b);
+	b = new Beacon("b9407f30-f5f8-466e-aff9-25556b57fe6d", "22210", "7642");
+	b.setPosicion(new Posicion(-30, 0));
+	this.beacons.push(b);
+	b = new Beacon("b9407f30-f5f8-466e-aff9-25556b57fe6d", "22213", "7609");
+	b.setPosicion(new Posicion(0, 30));
+	this.beacons.push(b);
 
 	console.log(this.beacons);
+	*/
 }
 
 Mapa.prototype.setDesfasaje = function(angulo){
