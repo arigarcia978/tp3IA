@@ -1,0 +1,17 @@
+<div>
+	<ion-view view-title="Inicio">
+		<ion-content>
+			<h1>Agregar Lugar</h1>
+			<div class="list">
+			  	<label class="item item-input" >
+			    	<span class="input-label" >Nombre</span>
+			    	<input type="text" ng-model = 'lugar.nombre'>
+			  	</label>
+			  	{{ lugar }}
+			  	<a class = 'button button-block button-royal' ng-click = 'guardarLugar(lugar)'>
+			  		Agregar
+			  	</a>
+			</div>
+	  	</ion-content>
+	</ion-view>
+</div>

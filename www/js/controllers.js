@@ -50,26 +50,19 @@ angular.module('starter')
 	.controller('MainController', ['$scope', function($scope){
 	}])
 	//agregar $cordovaBeacon para usarlo
-	.controller('BeaconsController', ['$scope', '$rootScope', '$ionicPlatform', '$ionicPopup', '$timeout', '$cordovaBeacon',
-		function($scope, $rootScope, $ionicPlatform, $ionicPopup, $timeout, $cordovaBeacon){
-			$scope.beacons = {};
+	.controller('BeaconsController', ['$scope', '$rootScope', '$ionicPopup', 'BeaconsSeaker', 
+		function($scope, $rootScope, $ionicPopup, BeaconsSeaker){
 			
-		    $ionicPlatform.ready(function() {
-		        $cordovaBeacon.requestWhenInUseAuthorization();
-		        $rootScope.$on("$cordovaBeacon:didRangeBeaconsInRegion", function(event, resultado) {
-		            var beacons = resultado.beacons;
-		            var valorUnico;
-		            for(var i = 0; i < beacons.length; i++) {
-		                valorUnico = beacons[i].uuid + ":" + beacons[i].major + ":" + beacons[i].minor;
-		                $scope.beacons[valorUnico] = {
-		                	nombre: beaconsHardcodeado[valorUnico],
-		                	beacon: beacons[i]
-		                }
-		            }
-		            $scope.$apply();
-		        });
-		        $cordovaBeacon.startRangingBeaconsInRegion($cordovaBeacon.createBeaconRegion("estimote", "b9407f30-f5f8-466e-aff9-25556b57fe6d"));
-			});
+			function buscarBeacons(){
+				BeaconsSeaker.findBeacons();
+				$scope.beacons = $rootScope.beacons;
+
+				setInterval(function(){
+					console.log($scope.beacons);
+					$scope.$apply();
+				}, 3000);
+			}
+			buscarBeacons();
 			
 			//$scope.beacons = beacons;
 			var beacon;
@@ -139,3 +132,9 @@ angular.module('starter')
 				$scope.posicion = controladorGestionarMapa.getPosicionActual($scope.beacons);
 	    	}
 		}])
+.controller('PlacesController', ['$scope', function($scope){
+	$scope.guardarLugar = function(lugar){
+		console.log(lugar);
+
+	}
+}])

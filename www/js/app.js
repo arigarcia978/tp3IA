@@ -42,5 +42,10 @@ angular.module('starter', ['ionic', 'ui.router', 'ngCordovaBeacon'])
       url: '/beacons',
       templateUrl: 'templates/beacons.html',
       controller: 'BeaconsController'
+    })
+    .state('nuevoLugar', {
+      url: '/newLugar',
+      templateUrl: 'templates/lugares.html',
+      controller: 'PlacesController'
     });
 });

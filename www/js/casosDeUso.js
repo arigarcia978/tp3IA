@@ -91,7 +91,7 @@ ControladorGestionarMapa.prototype.getBeaconsGuardadosMasCercanos = function(bea
 }
 ControladorGestionarMapa.prototype.comprobarSiBeaconYaSeCargo = function(datosBeacon){
 	var beacon;
-	if(datosBeacon typeof Beacon){
+	if(typeof datosBeacon == 'Beacon'){
 		beacon = datosBeacon;
 	} else {
 		beacon = new Beacon(datosBeacon.uuid, datosBeacon.major, datosBeacon.minor);
