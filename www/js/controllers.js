@@ -132,12 +132,6 @@ angular.module('starter')
 				$scope.posicion = controladorGestionarMapa.getPosicionActual($scope.beacons);
 			}
 		}])
-	.controller('PlacesController', ['$scope', function($scope){
-		$scope.guardarLugar = function(lugar){
-			console.log(lugar);
-
-		}
-	}])
 	.controller('NodesController', ['cargandoNodos', function(cargando) {
 
 		this.posicionActual = controladorGestionarCaminos.getPosicionActual();
@@ -166,7 +160,7 @@ angular.module('starter')
 		}
 	}])
 	.controller('GuidanceController', ['BeaconsSeaker', '$rootScope', '$scope',
-		function(BeaconsSeaker $rootScope, $scope){
+		function(BeaconsSeaker, $rootScope, $scope){
 			function buscarBeacons(){
 				BeaconsSeaker.findBeacons();
 				$scope.beacons = $rootScope.beacons;

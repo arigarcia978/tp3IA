@@ -4,7 +4,7 @@ var caminos = [
 
 function ControladorGuia (){
 	this.mapa = controladorGestionarMapa.getMapa();
-	this.camino = camino;
+	this.camino;
 	this.nodoAlQueIr;
 	this.numeroDeNodo = -1;
 }

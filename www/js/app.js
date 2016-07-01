@@ -43,11 +43,6 @@ angular.module('starter', ['ionic', 'ui.router', 'ngCordovaBeacon'])
       templateUrl: 'templates/beacons.html',
       controller: 'BeaconsController'
     })
-    .state('nuevoLugar', {
-      url: '/newLugar',
-      templateUrl: 'templates/lugares.html',
-      controller: 'PlacesController'
-    })
     .state('cargandoNodos', {
       url: '/cargando-nodos',
       templateUrl: 'templates/cargando-nodos.html',
@@ -59,6 +54,11 @@ angular.module('starter', ['ionic', 'ui.router', 'ngCordovaBeacon'])
       templateUrl: 'templates/elegir-nodo-destino.html',
       controller: 'cargarDestinoController',
       controllerAs: 'Destino'
+    })
+    .state('elegirDestino', {
+      url: '/elegirDestino',
+      templateUrl: 'templates/guia.html',
+      controller: 'GuidanceController'
     });
 
 });
