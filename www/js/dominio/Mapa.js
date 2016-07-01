@@ -15,6 +15,7 @@ function Mapa(){
 
 	console.log(this.beacons);
 	*/
+	this.nodos = [];
 }
 
 Mapa.prototype.setDesfasaje = function(angulo){
@@ -46,4 +47,7 @@ Mapa.prototype.getPosicionDeBeacon = function(valorUnico){
 			return b.posicion;
 		}
 	}
+}
+Mapa.prototype.addNodo = function(nodo){
+	this.nodos.push(nodo);
 }

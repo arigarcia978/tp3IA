@@ -42,10 +42,9 @@ function getLugar(nombre) {
 	})
 
 }
-
-
 function ControladorGestionarCaminos() {
 	this.ultimoNodo;
+	this.mapa = controladorGestionarMapa.getMapa();
 	this.posicionHardActual = 0;
 	this.nodos = [];
 }
@@ -54,16 +53,30 @@ ControladorGestionarCaminos.prototype.getPosicionActual = function() {
 }
 ControladorGestionarCaminos.prototype.agregarNodoIntermedio = function(posicion) {
 	var nodo = new Nodo(posicion);
+	nodo.addNodoAlcanzable(this.ultimoNodo);
 	this.ultimoNodo = nodo;
-	this.nodos.push(nodo);
+	this.mapa.addNodo(nodo);
+	//this.nodos.push(nodo);
 };
 ControladorGestionarCaminos.prototype.agregarNodoDestino = function(posicion, lugar) {
 
 	lugar.agregarPosicion(posicion);
 	var nodo = new Nodo(posicion);
 	nodo.setLugarDeInteres(lugar);
-	this.nodos.push(nodo);
+	nodo.addNodoAlcanzable(this.ultimoNodo);
+	this.ultimoNodo = nodo;
+	this.mapa.addNodo(nodo);
+	//this.nodos.push(nodo);
 
+}
+ControladorGestionarCaminos.prototype.comprobarSiSeEncuentraEnUnNodo = function(posicion){
+	var nodo = controladorGuia.getNodoMasCercano(posicion);
+	var distancia = controladorGuia.getDistanciaEntrePuntos(posicion, nodo.posicion);
+	if(distancia < 0.5){
+		console.log('se encuentra en un nodo');
+		console.log(nodo);
+		this.ultimoNodo = nodo;
+	}
 }
 
 var controladorGestionarCaminos = new ControladorGestionarCaminos();

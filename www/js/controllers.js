@@ -132,20 +132,37 @@ angular.module('starter')
 				$scope.posicion = controladorGestionarMapa.getPosicionActual($scope.beacons);
 			}
 		}])
-	.controller('NodesController', ['cargandoNodos', function(cargando) {
+	.controller('NodesController', ['cargandoNodos', 'BeaconsSeaker', '$scope', '$rootScope',
+		function(cargando, BeaconsSeaker, $scope, $rootScope) {
+			setInterval(getPosicion, 1000);
+			var contexto = this;
 
-		this.posicionActual = controladorGestionarCaminos.getPosicionActual();
+			function buscarBeacons(){
+					BeaconsSeaker.findBeacons();
+					$scope.beacons = $rootScope.beacons;
 
-		this.agregarNodoIntermedio = function() {
-			controladorGestionarCaminos.agregarNodoIntermedio(this.posicionActual);
-			this.posicionActual = controladorGestionarCaminos.getPosicionActual();
-		}
+					setInterval(function(){
+						console.log($scope.beacons);
+						$scope.$apply();
+					}, 3000);
+				}
+				buscarBeacons();
 
-		this.agregarNodoDestino = function() {
-			var ahora = this.posicionActual;
-			this.posicionActual = controladorGestionarCaminos.getPosicionActual();
-			cargando.setPosicion(ahora);
-		}
+			function getPosicion(){
+				contexto.posicionActual = controladorGestionarMapa.getPosicionActual($scope.beacons);
+				controladorGuia.comprobarSiSeEncuentraEnUnNodo(contexto.posicionActual);
+			}
+
+			this.agregarNodoIntermedio = function() {
+				controladorGestionarCaminos.agregarNodoIntermedio(this.posicionActual);
+				this.posicionActual = controladorGestionarCaminos.getPosicionActual();
+			}
+
+			this.agregarNodoDestino = function() {
+				var ahora = this.posicionActual;
+				this.posicionActual = controladorGestionarCaminos.getPosicionActual();
+				cargando.setPosicion(ahora);
+			}
 	}])
 	.controller('cargarDestinoController', ['cargandoNodos', '$location', function(cargando, $location) {
 		console.log('caca');
