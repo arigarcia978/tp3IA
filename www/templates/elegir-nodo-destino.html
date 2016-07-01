@@ -1,0 +1,15 @@
+<div>
+	<ion-view view-title="Elegir Destino" cache-view="false">
+		<ion-content class="padding">
+			<div class="row">
+				<h2 class="col-20">Elegir lugar</h2>
+				<h3 class="col">Posicion: x: {{Destino.posicion.x}} y: {{Destino.posicion.y}}</h3>
+			</div>
+			<ul class="list">
+			    <li class="item" ng-repeat="lugar in Destino.lugares" ng-click="Destino.elegirLugar(this.lugar)">
+			    	{{lugar.getNombre()}}
+			    </li>
+			</ul>
+	  	</ion-content>
+	</ion-view>
+</div>

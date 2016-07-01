@@ -1,0 +1,20 @@
+<div>
+	<ion-view view-title="Cargando Nodos">
+		<ion-content class="padding">
+			<div class="card">
+				<div class="item item-text-wrap row">
+					<h2>Posición Actual</h2>
+					<span class="col col-offset-20 col-50">
+						x:{{Nodos.posicionActual.x}} y:{{Nodos.posicionActual.y}}
+					</span>
+				</div>
+			</div>
+			<a ng-click="Nodos.agregarNodoIntermedio()" class="button button-block button-royal">
+				Intermedio
+			</a>
+			<a href="#/elegir-nodo-destino" ng-click="Nodos.agregarNodoDestino()" class="button button-block button-royal">
+				Destino
+			</a>
+	  	</ion-content>
+	</ion-view>
+</div>

@@ -48,10 +48,10 @@ var beacons = {};
 */
 angular.module('starter')
 	.controller('MainController', ['$scope', function($scope){
+		
 	}])
-	//agregar $cordovaBeacon para usarlo
 	.controller('BeaconsController', ['$scope', '$rootScope', '$ionicPopup', 'BeaconsSeaker', 
-		function($scope, $rootScope, $ionicPopup, BeaconsSeaker){
+		function($scope, $rootScope, $ionicPopup, BeaconsSeaker) {
 			
 			function buscarBeacons(){
 				BeaconsSeaker.findBeacons();
@@ -127,14 +127,56 @@ angular.module('starter')
 				} else {
 					console.log('mapa no inicializado todavía');
 				}
-	    	}
-	    	$scope.getPosicionActual = function(){
+			}
+			$scope.getPosicionActual = function(){
 				$scope.posicion = controladorGestionarMapa.getPosicionActual($scope.beacons);
-	    	}
+			}
 		}])
-.controller('PlacesController', ['$scope', function($scope){
-	$scope.guardarLugar = function(lugar){
-		console.log(lugar);
+	.controller('PlacesController', ['$scope', function($scope){
+		$scope.guardarLugar = function(lugar){
+			console.log(lugar);
 
+		}
+	}])
+	.controller('NodesController', ['cargandoNodos', function(cargando) {
+
+		this.posicionActual = controladorGestionarCaminos.getPosicionActual();
+
+		this.agregarNodoIntermedio = function() {
+			controladorGestionarCaminos.agregarNodoIntermedio(this.posicionActual);
+			this.posicionActual = controladorGestionarCaminos.getPosicionActual();
+		}
+
+		this.agregarNodoDestino = function() {
+			var ahora = this.posicionActual;
+			this.posicionActual = controladorGestionarCaminos.getPosicionActual();
+			cargando.setPosicion(ahora);
+		}
+	}])
+	.controller('cargarDestinoController', ['cargandoNodos', '$location', function(cargando, $location) {
+		console.log('caca');
+
+		this.posicion = cargando.getPosicion();
+		this.lugares = lugares;
+
+		this.elegirLugar = function(lugar) {
+			delete lugar.$$hashKey;
+			controladorGestionarCaminos.agregarNodoDestino(this.posicion, lugar);
+			$location.path('/cargando-nodos');
+		}
+	}]);
+
+
+angular.module('starter').factory('cargandoNodos', function() {
+	var posicion;
+
+	return {
+		setPosicion: function(nuevaPosicion) {
+			posicion = nuevaPosicion;
+		},
+		getPosicion: function() {
+			return posicion;
+		}
 	}
-}])
+});
+

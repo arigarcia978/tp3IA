@@ -47,5 +47,18 @@ angular.module('starter', ['ionic', 'ui.router', 'ngCordovaBeacon'])
       url: '/newLugar',
       templateUrl: 'templates/lugares.html',
       controller: 'PlacesController'
+    })
+    .state('cargandoNodos', {
+      url: '/cargando-nodos',
+      templateUrl: 'templates/cargando-nodos.html',
+      controller: 'NodesController',
+      controllerAs: 'Nodos'
+    })
+    .state('eligiendoNodoDestino', {
+      url: '/elegir-nodo-destino',
+      templateUrl: 'templates/elegir-nodo-destino.html',
+      controller: 'cargarDestinoController',
+      controllerAs: 'Destino'
     });
+
 });

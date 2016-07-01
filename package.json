@@ -15,11 +15,13 @@
     "shelljs": "^0.3.0"
   },
   "cordovaPlugins": [
-    "cordova-plugin-device",
+    "com.unarin.cordova.beacon",
     "cordova-plugin-console",
-    "cordova-plugin-whitelist",
+    "cordova-plugin-device",
+    "cordova-plugin-device-orientation",
     "cordova-plugin-splashscreen",
     "cordova-plugin-statusbar",
+    "cordova-plugin-whitelist",
     "ionic-plugin-keyboard"
   ],
   "cordovaPlatforms": []
