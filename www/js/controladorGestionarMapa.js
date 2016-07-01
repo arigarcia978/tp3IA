@@ -104,20 +104,7 @@ ControladorGestionarMapa.prototype.getPuntoDePosicionActual = function(puntos){
 	var p4 = trilaterate(puntos[0], puntos[1], puntos[2], true);
 	console.log(puntos);
 	console.log(p4);
-	/*
-	console.log(p4);
-	var puntosEnx = 0;
-	var puntosEny = 0;
 
-	for(var j = 0; j < p4.length; j++){
-		var punto = p4[j];
-		puntosEnx += punto.x;
-		puntosEny += punto.y;
-	}
-
-	var posicionEny = puntosEny/p4.length;
-	var posicionEnx = puntosEnx/p4.length;
-*/
 	var posicionActual = new Posicion(p4.x, p4.y);
 	console.log(posicionActual);
 	return posicionActual;
@@ -125,5 +112,7 @@ ControladorGestionarMapa.prototype.getPuntoDePosicionActual = function(puntos){
 ControladorGestionarMapa.prototype.mapaInicializado = function(){
 	return this.mapa.beacons.length == 3;
 }
-
+ControladorGestionarMapa.prototype.getMapa = function(){
+	return this.mapa;
+}
 var controladorGestionarMapa = new ControladorGestionarMapa();

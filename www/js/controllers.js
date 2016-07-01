@@ -164,7 +164,42 @@ angular.module('starter')
 			controladorGestionarCaminos.agregarNodoDestino(this.posicion, lugar);
 			$location.path('/cargando-nodos');
 		}
-	}]);
+	}])
+	.controller('GuidanceController', ['BeaconsSeaker', '$rootScope', '$scope',
+		function(BeaconsSeaker $rootScope, $scope){
+			function buscarBeacons(){
+				BeaconsSeaker.findBeacons();
+				$scope.beacons = $rootScope.beacons;
+
+				setInterval(function(){
+					console.log($scope.beacons);
+					$scope.$apply();
+				}, 3000);
+			}
+			buscarBeacons();
+			setInterval(getAngulo, 300);
+
+			function getAngulo(){
+	      		navigator.compass.getCurrentHeading(
+	        		function(data) {
+	        			$scope.compass = data.magneticHeading;
+	        		},
+	        		function(error){
+	          			console.log(error);
+	        		});
+	    	}
+
+			$scope.lugarDeDestinoSeleccionado = function(lugar){
+				$scope.posicion = controladorGestionarMapa.getPosicionActual($scope.beacons);
+				controladorGuia.irA(lugar, posicion, $scope.compass);
+				setInterval(getAnguloDeDireccion, 1000);
+			}
+
+			function getAnguloDeDireccion(){
+				$scope.angulo = controladorGuia.comprobarElCamino($scope.posicion, $scope.angulo);
+			}
+		}
+	]);
 
 
 angular.module('starter').factory('cargandoNodos', function() {
