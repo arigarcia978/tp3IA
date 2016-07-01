@@ -32,7 +32,6 @@ Mapa.prototype.beaconCargado = function(beacon){
 	var beacons = this.beacons;
 	for(var i = 0; i < beacons.length; i++){
 		var b = beacons[i];
-		console.log(b);
 		if(b.valorUnico == beacon.valorUnico){
 			return true;
 		}
@@ -50,4 +49,7 @@ Mapa.prototype.getPosicionDeBeacon = function(valorUnico){
 }
 Mapa.prototype.addNodo = function(nodo){
 	this.nodos.push(nodo);
+}
+Mapa.prototype.hayNodosCargados = function(){
+	return this.nodos.length > 0;
 }

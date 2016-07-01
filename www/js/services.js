@@ -8,8 +8,7 @@ angular.module('starter')
 				        $cordovaBeacon.requestWhenInUseAuthorization();
 				        $rootScope.$on("$cordovaBeacon:didRangeBeaconsInRegion", function(event, resultado) {
 				        	var beacons = resultado.beacons;
-				        	console.log(beacons);
-				            var valorUnico;
+				        	var valorUnico;
 				            for(var i = 0; i < beacons.length; i++) {
 				                valorUnico = beacons[i].uuid + ":" + beacons[i].major + ":" + beacons[i].minor;
 				                $rootScope.beacons[valorUnico] = {

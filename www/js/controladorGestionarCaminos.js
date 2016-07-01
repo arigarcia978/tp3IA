@@ -56,6 +56,7 @@ ControladorGestionarCaminos.prototype.agregarNodoIntermedio = function(posicion)
 	nodo.addNodoAlcanzable(this.ultimoNodo);
 	this.ultimoNodo = nodo;
 	this.mapa.addNodo(nodo);
+	console.log(this.mapa);
 	//this.nodos.push(nodo);
 };
 ControladorGestionarCaminos.prototype.agregarNodoDestino = function(posicion, lugar) {
@@ -66,16 +67,19 @@ ControladorGestionarCaminos.prototype.agregarNodoDestino = function(posicion, lu
 	nodo.addNodoAlcanzable(this.ultimoNodo);
 	this.ultimoNodo = nodo;
 	this.mapa.addNodo(nodo);
+	console.log(this.mapa);
 	//this.nodos.push(nodo);
 
 }
 ControladorGestionarCaminos.prototype.comprobarSiSeEncuentraEnUnNodo = function(posicion){
-	var nodo = controladorGuia.getNodoMasCercano(posicion);
-	var distancia = controladorGuia.getDistanciaEntrePuntos(posicion, nodo.posicion);
-	if(distancia < 0.5){
-		console.log('se encuentra en un nodo');
-		console.log(nodo);
-		this.ultimoNodo = nodo;
+	if(this.mapa.hayNodosCargados()){
+		var nodo = controladorGuia.getNodoMasCercano(posicion);
+		var distancia = controladorGuia.getDistanciaEntrePuntos(posicion, nodo.posicion);
+		if(distancia < 0.5){
+			console.log('se encuentra en un nodo');
+			console.log(nodo);
+			this.ultimoNodo = nodo;
+		}
 	}
 }
 

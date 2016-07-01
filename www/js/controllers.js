@@ -58,7 +58,6 @@ angular.module('starter')
 				$scope.beacons = $rootScope.beacons;
 
 				setInterval(function(){
-					console.log($scope.beacons);
 					$scope.$apply();
 				}, 3000);
 			}
@@ -122,14 +121,14 @@ angular.module('starter')
 
 	    	$scope.getPosicion = function(){
 	    		if(controladorGestionarMapa.mapaInicializado()){
-					console.log('mapaInicializado');
 					setInterval($scope.getPosicionActual, 500);
-				} else {
-					console.log('mapa no inicializado todavía');
 				}
 			}
 			$scope.getPosicionActual = function(){
-				$scope.posicion = controladorGestionarMapa.getPosicionActual($scope.beacons);
+				var posicion = controladorGestionarMapa.getPosicionActual($scope.beacons);
+				if(posicion != undefined){
+					$scope.posicion = posicion;
+				}
 			}
 		}])
 	.controller('NodesController', ['cargandoNodos', 'BeaconsSeaker', '$scope', '$rootScope',
@@ -142,31 +141,35 @@ angular.module('starter')
 					$scope.beacons = $rootScope.beacons;
 
 					setInterval(function(){
-						console.log($scope.beacons);
 						$scope.$apply();
 					}, 3000);
 				}
 				buscarBeacons();
 
 			function getPosicion(){
-				contexto.posicionActual = controladorGestionarMapa.getPosicionActual($scope.beacons);
-				controladorGuia.comprobarSiSeEncuentraEnUnNodo(contexto.posicionActual);
+				var posicion = controladorGestionarMapa.getPosicionActual($scope.beacons)
+
+				if(posicion != undefined){
+					contexto.posicionActual = posicion;
+					console.log(contexto.posicionActual);
+					controladorGestionarCaminos.comprobarSiSeEncuentraEnUnNodo(contexto.posicionActual);	
+				}
 			}
 
 			this.agregarNodoIntermedio = function() {
-				controladorGestionarCaminos.agregarNodoIntermedio(this.posicionActual);
-				this.posicionActual = controladorGestionarCaminos.getPosicionActual();
+				var posicion = this.posicionActual;
+				controladorGestionarCaminos.agregarNodoIntermedio(posicion);
+				controladorGestionarCaminos.comprobarSiSeEncuentraEnUnNodo(posicionActual);	
 			}
 
 			this.agregarNodoDestino = function() {
+				var posicion = this.posicionActual;
 				var ahora = this.posicionActual;
-				this.posicionActual = controladorGestionarCaminos.getPosicionActual();
 				cargando.setPosicion(ahora);
 			}
 	}])
 	.controller('cargarDestinoController', ['cargandoNodos', '$location', function(cargando, $location) {
-		console.log('caca');
-
+		
 		this.posicion = cargando.getPosicion();
 		this.lugares = lugares;
 
@@ -183,7 +186,6 @@ angular.module('starter')
 				$scope.beacons = $rootScope.beacons;
 
 				setInterval(function(){
-					console.log($scope.beacons);
 					$scope.$apply();
 				}, 3000);
 			}

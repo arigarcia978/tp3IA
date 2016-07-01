@@ -12,8 +12,6 @@ ControladorGestionarMapa.prototype.inicializarMapa = function(datosBeacons, angu
 ControladorGestionarMapa.prototype.cargarBeaconsIniciales = function(beacon, distanciaABeacon, angulo){
 	var posicion;
 	if(!this.mapa.hayBeaconsCargados()){
-		console.log(distanciaABeacon);
-		console.log('primer beacon');
 		this.mapa.desfasaje = angulo;
 		posicion = new Posicion(distanciaABeacon, 0);
 	} else {
@@ -36,7 +34,6 @@ ControladorGestionarMapa.prototype.cargarBeaconsIniciales = function(beacon, dis
 	}
 	beacon.setPosicion(posicion);
 	this.mapa.addBeacon(beacon);
-	console.log(this.mapa);
 }
 ControladorGestionarMapa.prototype.guardarPuntoIntermedio = function(beaconsVisibles){
 	var posicionActual = getPosicionActual(beaconsVisibles);
@@ -49,8 +46,6 @@ ControladorGestionarMapa.prototype.guardarPuntoDestino = function(beaconsVisible
 
 ControladorGestionarMapa.prototype.getPosicionActual = function (beaconsVisibles){
 	var arrayBeacons = this.getBeaconsGuardadosMasCercanos(beaconsVisibles);
-
-	console.log(arrayBeacons);
 
 	var puntos = [];
 	for(i = 0; i < 3; i++){
@@ -69,7 +64,6 @@ ControladorGestionarMapa.prototype.getBeaconsGuardadosMasCercanos = function(bea
 
 	for(b in beaconsVisibles){
 		var beacon = beaconsVisibles[b].beacon;
-		console.log(beacon);
 		if(this.comprobarSiBeaconYaSeCargo(beacon)){
 			arrayBeacons.push(beacon);
 		}
@@ -92,22 +86,21 @@ ControladorGestionarMapa.prototype.getBeaconsGuardadosMasCercanos = function(bea
 ControladorGestionarMapa.prototype.comprobarSiBeaconYaSeCargo = function(datosBeacon){
 	var beacon;
 	if(typeof datosBeacon == Beacon){
-		console.log('es objeto beacon');
 		beacon = datosBeacon;
 	} else {
-		console.log('no es un beacon');
 		beacon = new Beacon(datosBeacon.uuid, datosBeacon.major, datosBeacon.minor);
 	}
 	return this.mapa.beaconCargado(beacon);
 }
 ControladorGestionarMapa.prototype.getPuntoDePosicionActual = function(puntos){
 	var p4 = trilaterate(puntos[0], puntos[1], puntos[2], true);
-	console.log(puntos);
-	console.log(p4);
-
-	var posicionActual = new Posicion(p4.x, p4.y);
-	console.log(posicionActual);
-	return posicionActual;
+	
+	if(p4 != undefined){
+		var posicionActual = new Posicion(p4.x, p4.y);
+		return posicionActual;
+	} else {
+		console.log('no puede trilaterizar');
+	}
 }
 ControladorGestionarMapa.prototype.mapaInicializado = function(){
 	return this.mapa.beacons.length == 3;

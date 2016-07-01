@@ -112,13 +112,13 @@ ControladorGuia.prototype.getDesfasajeDeMapa = function(){
 	return this.mapa.desfasaje;
 }
 
-function getNodoMasCercano(posicion){
+ControladorGuia.prototype.getNodoMasCercano = function(posicion){
 	var nodos = this.mapa.nodos;
 	var menorDistancia = -1;
 	var nodoMasCercano = {};
 	for(var i = 0; i < nodos.length; i++){
 		var nodo = nodos[i];
-		var distancia = getDistanciaEntrePuntos(posicion, nodo.posicion);
+		var distancia = this.getDistanciaEntrePuntos(posicion, nodo.posicion);
 		if(menorDistancia == -1 || distancia < menorDistancia){
 			menorDistancia = distancia;
 			nodoMasCercano = nodo;
@@ -126,10 +126,13 @@ function getNodoMasCercano(posicion){
 	}
 	return nodoMasCercano;
 }
-function getDistanciaEntrePuntos(punto1, punto2){
-	var catop = Math.abs(punto1.y - punto2.y);
-	var catad = Math.abs(punto1.x - punto2.x);
-	return Math.sqrt(Math.pow(catop, 2) + Math.pow(catad, 2));
+ControladorGuia.prototype.getDistanciaEntrePuntos = function(punto1, punto2){
+	if(punto1 != undefined && punto2 != undefined){
+		var catop = Math.abs(punto1.y - punto2.y);
+		var catad = Math.abs(punto1.x - punto2.x);
+		return Math.sqrt(Math.pow(catop, 2) + Math.pow(catad, 2));
+	}
+	return 100;
 }
 
 var controladorGuia = new ControladorGuia();
